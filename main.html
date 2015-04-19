@@ -40,8 +40,10 @@
 		}
 		
 		var oFReader = new FileReader();
-		oFReader.readAsDataURL(document.getElementById("imageInput").files[0]);
-
+		if(document.getElementById("imageInput").files.length > 0){
+			oFReader.readAsDataURL(document.getElementById("imageInput").files[0]);
+		}
+		
 		oFReader.onload = function (oFREvent) {
 			document.getElementById("imageView").src = oFREvent.target.result;
 		};
