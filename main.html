@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vertex helper</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>	
+
+	<div style="text-align:center;">
+		<input id="imageInput" type="file" onchange="PreviewImage();" />
+	</div>
+	<div style="text-align:center">
+		<div id="help" style="padding: 10px;">Please select your image.</div>
+	</div>
+	<div style="text-align:center; margin:20px;">
+		<img id="imageView" style="border: 1px solid red;" />
+	</div>
+	<div style="text-align:center">
+		<div id="output" style="border: 1px solid black; padding: 10px;"></div>
+	</div>
+	
+	<script type="text/javascript">
+
+		function PreviewImage() {
+			var oFReader = new FileReader();
+			oFReader.readAsDataURL(document.getElementById("imageInput").files[0]);
+
+			oFReader.onload = function (oFREvent) {
+				document.getElementById("imageView").src = oFREvent.target.result;
+			};
+			
+			$('#help').html("Click over the image.");
+		};
+		
+		function addVertex(x, y){
+			var image = document.getElementById("imageView");
+			$('#output').html(
+				"center-relative: "+(x-image.naturalWidth/2).toFixed(2)+","+(y-image.naturalHeight/2).toFixed(2)+"<br/>"+
+				"absolute: "+x.toFixed(2)+","+y.toFixed(2)
+			);
+		}
+		
+		var oFReader = new FileReader();
+		oFReader.readAsDataURL(document.getElementById("imageInput").files[0]);
+
+		oFReader.onload = function (oFREvent) {
+			document.getElementById("imageView").src = oFREvent.target.result;
+		};
+		
+		$(document).ready(function() {
+			 $('#imageView').click(function(e) {
+				var offset = $(this).offset();
+				addVertex(e.pageX - offset.left, e.pageY - offset.top);
+			 });
+		});
+	</script>
+</body>
+</html>
